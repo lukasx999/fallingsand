@@ -35,36 +35,43 @@ void Canvas::update(void) {
 
             if (m_grid[x][y]) {
 
+                if (y == m_height-1) { // ground collision
+                    m_grid[x][y] = 1;
+                    continue;
+                }
+
+                if (x == m_width-1) { // right wall collision
+                    m_grid[x][y] = 1;
+                    continue;
+                }
+
+                if (x == 0) { // left wall collision
+                    m_grid[x][y] = 1;
+                    continue;
+                }
+
+
+
                 if (!m_grid[x][y+1]) { // check below
                     m_grid[x][y] = 0;
                     m_grid[x][y+1] = 1;
-                }
-
-
-                #if 0
-                if (!m_grid[x-1][y] && !m_grid[x+1][y]) { // left and right are free
-                    if (rand() % 2)
-                        m_grid[x-1][y] = 1;
-                    else
-                        m_grid[x+1][y] = 1;
                     continue;
                 }
-                #endif
+
+
+                if (!m_grid[x-1][y] && !m_grid[x-1][y+1]) { // check left and diagonal
+                    m_grid[x-1][y] = 1;
+                    continue;
+                }
+
+                if (!m_grid[x+1][y] && !m_grid[x+1][y+1]) { // check right and diagonal
+                    m_grid[x+1][y] = 1;
+                    continue;
+                }
 
 
 
-                // if (!m_grid[x-1][y]) { // check left
-                //     m_grid[x-1][y] = 1;
-                //     continue;
-                // }
-                //
-                // if (!m_grid[x+1][y]) { // check right
-                //     m_grid[x+1][y] = 1;
-                //     continue;
-                // }
-                //
-                //
-                // m_grid[x][y] = 1; // else
+                m_grid[x][y] = 1; // else
 
             }
 

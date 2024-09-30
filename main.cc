@@ -75,6 +75,10 @@ static void normalize_cursor(Canvas &c, rl::Vector2 &pos) {
 
 
 
+static bool is_out_of_bounds(Canvas &canvas, rl::Vector2 pos) {
+    return pos.x < 0 || pos.x > canvas.m_width-1 || pos.y < 0 || pos.y > canvas.m_height;
+}
+
 
 int main(void) {
 
@@ -125,7 +129,8 @@ int main(void) {
             rl::Vector2 pos = rl::GetMousePosition();
             if (rl::IsMouseButtonDown(rl::MOUSE_BUTTON_LEFT)) {
                 normalize_cursor(canvas, pos);
-                canvas.m_grid[pos.x][pos.y] = 1;
+                if (!is_out_of_bounds(canvas, pos))
+                    canvas.m_grid[pos.x][pos.y] = 1;
             }
 
 
